@@ -1,0 +1,14 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="android:Theme.Material.Light">
+    </style>
+
+    <style name="ChatText" parent="android:TextAppearance.Material.Widget.TextView">
+        <item name="android:textSize">32sp</item>
+    </style>
+    <style name="ChatTextTitle" parent="ChatText">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+</resources>
