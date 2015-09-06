@@ -1,14 +1,18 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Material.Light">
+    <style name="AppTheme"
+           parent="android:Theme.Holo.Light.NoActionBar">
     </style>
 
-    <style name="ChatText" parent="android:TextAppearance.Material.Widget.TextView">
-        <item name="android:textSize">32sp</item>
+    <style name="ChatText" parent="android:TextAppearance.Holo.Widget.TextView">
+        <item name="android:textSize">18sp</item>
     </style>
-    <style name="ChatTextTitle" parent="ChatText">
+    <style name="ChatText.Title" parent="ChatText">
         <item name="android:textStyle">bold</item>
+    </style>
+    <style name="ChatButton" parent="android:TextAppearance.Holo.Widget.Button">
+        <item name="android:textSize">18sp</item>
     </style>
 
 </resources>

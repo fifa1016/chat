@@ -3,8 +3,15 @@ package com.wang.chat.activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.inputmethod.InputMethodManager;
 import com.wang.chat.R;
 import com.wang.chat.fragment.*;
 
@@ -14,8 +21,11 @@ import com.wang.chat.fragment.*;
  */
 public class ConfigActivity extends BaseActivity
         implements OnInteractListener {
+    static final String TAG = "ConfigActivity";
 
-    private Fragment mAccountFrag;
+    static final int REQUEST_CODE_PICK = 0x001;
+
+    private AccountFragment mAccountFrag;
     private Fragment mChooseFrag, mServerFrag, mScanFrag;
 
     @Override
@@ -34,12 +44,33 @@ public class ConfigActivity extends BaseActivity
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         String tag = null;
         switch (resId){
+            case R.id.avatar_image:
+                Intent pickIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI );
+                pickIntent.putExtra("crop", "true" );
+                pickIntent.putExtra("aspectX",1);
+                pickIntent.putExtra("aspectY",1);
+                pickIntent.putExtra("outputX",200);
+                pickIntent.putExtra("outputY",200);
+                pickIntent.putExtra("return-data", true );
+                startActivityForResult(pickIntent, REQUEST_CODE_PICK);
+                break;
             case R.id.login_button:
                 tag = "choose";
                 if( mChooseFrag == null ){
                     mChooseFrag = new ChooseFragment();
                 }
                 transaction.replace(R.id.layout_config, mChooseFrag, "choose");
+//                InputMethodManager methodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+//                if( methodManager.isActive() ){
+//                    try {
+//                        methodManager.hideSoftInputFromWindow(
+//                                getCurrentFocus().getWindowToken(),
+//                                InputMethodManager.HIDE_NOT_ALWAYS);
+//                    }catch (Exception e){
+//                        e.printStackTrace();
+//                    }
+//                }
+
                 break;
             case R.id.start_server_button:
                 tag = "server";
@@ -60,5 +91,16 @@ public class ConfigActivity extends BaseActivity
         transaction.commit();
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if( resultCode == RESULT_OK ){
+            if(requestCode == REQUEST_CODE_PICK ){
+                Bitmap bitmap = data.getParcelableExtra("data");
+                Log.d(TAG, "action=" +","+data.getAction()+", image="+bitmap.toString() +",data="+data.getDataString());
+                mAccountFrag.setAvatar( bitmap );
+            }
+        }else{
+            Log.w(TAG,"get avatar error");
+        }
+    }
 }

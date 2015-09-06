@@ -28,4 +28,5 @@ public class AboutActivity extends BaseActivity{
     public void onInteract(int resourceId) {
 
     }
+
 }

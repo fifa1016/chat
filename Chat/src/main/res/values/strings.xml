@@ -6,9 +6,11 @@
     <string name="action_about">About</string>
 
     <string name="title_activity_login">Login</string>
-    <string name="prompt_login_id">Please input id</string>
+    <string name="change_avatar">Click to change avatar</string>
+    <string name="nick_name">Nickname:</string>
+    <string name="prompt_login_id">Type your name here</string>
     <string name="id_empty_error">Can\'t be empty</string>
-    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_in">Next</string>
 
     <string name="start_as_server">Start as Server</string>
     <string name="scan">Scan QrCode</string>

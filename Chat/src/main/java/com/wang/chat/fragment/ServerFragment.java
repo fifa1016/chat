@@ -9,8 +9,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.wang.chat.R;
+import com.wang.chat.util.NetworkUtil;
 import com.wang.chat.util.Util;
-import com.wang.chat.util.QrCodeGenerator;
+import com.wang.chat.util.QRCodeGenerator;
 
 /**
  * Created by shawn on 8/26/15.
@@ -31,7 +32,7 @@ public class ServerFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        String ip = Util.getIPV4Address();
+        String ip = NetworkUtil.getIPV4Address();
         mTxtIp = (TextView) view.findViewById(R.id.server_ip);
         mTxtIp.setText( ip );
 
@@ -42,6 +43,6 @@ public class ServerFragment extends BaseFragment {
         mQrCode = (ImageView)view.findViewById(R.id.server_qrcode);
         String serverInfo = "http://" + ip +":" + port;
 
-        QrCodeGenerator.encodeToBitmap(serverInfo, mQrCode);
+        QRCodeGenerator.encodeToBitmap(serverInfo, mQrCode);
     }
 }
