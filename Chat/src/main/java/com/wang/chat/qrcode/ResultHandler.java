@@ -1,5 +1,6 @@
 package com.wang.chat.qrcode;
 
+import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
 
@@ -31,14 +32,16 @@ public class ResultHandler extends Handler {
     public void handleMessage(Message msg) {
         switch (msg.what) {
             case WHAT_DECODE_HANDLER_CREATED:
-                Handler decodeHandler = (Handler)msg.obj;
-                mListener.onDecodeHandlerReady( decodeHandler );
+                Handler decodeHandler = (Handler) msg.obj;
+                mListener.onDecodeHandlerReady(decodeHandler);
                 break;
             case WHAT_DECODE_SUCCESS:
+                String result = (String) msg.obj;
+                mListener.onResult(result, null);
                 break;
             case WHAT_DECODE_FAILED:
             default:
-                mListener.requestPreviewFrame( mThread.getDecodeHandler() );
+                mListener.requestPreviewFrame(mThread.getDecodeHandler());
                 break;
         }
     }

@@ -1,5 +1,7 @@
 package com.wang.chat.fragment;
 
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -7,10 +9,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import com.wang.chat.R;
 import com.wang.chat.qrcode.ResultListener;
 import com.wang.chat.qrcode.ResultHandler;
 import com.wang.chat.view.CameraPreview;
+
+import java.net.URL;
 
 /**
  * Created by shawn on 8/27/15.
@@ -20,6 +25,7 @@ public class ScanFragment extends BaseFragment implements ResultListener {
 
     private CameraPreview mPreview;
     private View mMaskView;
+    private ImageView mImageScan;
 
     @Nullable
     @Override
@@ -35,6 +41,7 @@ public class ScanFragment extends BaseFragment implements ResultListener {
         mMaskView = view.findViewById(R.id.scan_mask);
         mPreview.setFocusAreaSize(300);
 
+        mImageScan = (ImageView)view.findViewById(R.id.imgScan);
 
         if( mResultHandler == null ){
             mResultHandler = new ResultHandler( this );
@@ -49,7 +56,7 @@ public class ScanFragment extends BaseFragment implements ResultListener {
     @Override
     public void onPause() {
         super.onPause();
-        //mPreview.pause();
+        mPreview.stop();
     }
 
     @Override
@@ -62,7 +69,12 @@ public class ScanFragment extends BaseFragment implements ResultListener {
     private ResultHandler mResultHandler;
 
     @Override
-    public void onResult(String result){
+    public void onResult(String result, Bitmap bitmap){
+
+        if( result!=null && !result.trim().equals("")){
+            Uri uri = Uri.parse(result);
+            Log.d(TAG,"host:"+uri.getHost() +", port:"+uri.getPort() );
+        }
 
     }
 

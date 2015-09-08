@@ -23,9 +23,11 @@ public class DecodeHandler extends Handler {
 
     private Handler mResultHandler;
     private boolean mRunning = true;
+    private MultiFormatReader mReader;
 
     public DecodeHandler(Handler resultHandler) {
         mResultHandler = resultHandler;
+        mReader = new MultiFormatReader();
 
         Message msg = Message.obtain(resultHandler, ResultHandler.WHAT_DECODE_HANDLER_CREATED);
         msg.obj = this;
@@ -55,39 +57,60 @@ public class DecodeHandler extends Handler {
     }
 
     private void decode(byte[] data, int width, int height, int format) {
+        if (data == null)
+            Log.d(TAG, "decode  data null");
+        else
+            Log.d(TAG, "decode  data not null, length=" + data.length );
 
+        Result result = null;
         try {
-            if( data == null )
-                Log.d(TAG,"decode  data null");
-            else
-                Log.d(TAG,"decode  data not null");
-
-
-            YuvImage yuvImage = new YuvImage(data, format, width, height, null);
-
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            yuvImage.compressToJpeg(new Rect(0, 0, width, height), 50, outputStream);
-            byte[] bytes = outputStream.toByteArray();
-
-            LuminanceSource source = new PlanarYUVLuminanceSource(bytes, width, height, 0, 0, width, height, false);
-            BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(source));
-            Reader reader = new DataMatrixReader();
-            Result result = reader.decode(binaryBitmap);
-            Log.d(TAG, "result:" + result.getText());
-
-            if (result != null) {
-                Message msg = mResultHandler.obtainMessage(ResultHandler.WHAT_DECODE_SUCCESS, result);
-                msg.sendToTarget();
+            if( isYuvFormat(format)) {
+                LuminanceSource source = new PlanarYUVLuminanceSource(data, width, height, 0, 0, width, height, false);
+                BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(source));
+                result = mReader.decodeWithState(binaryBitmap);
+                mReader.reset();
             }
-
+            return;
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        if (mResultHandler != null) {
+
+        if (result != null) {
+            Log.d(TAG, "decode success");
+            Log.d(TAG, "result text:" + result.getText()==null?"null":result.getText() );
+            Message msg = mResultHandler.obtainMessage(ResultHandler.WHAT_DECODE_SUCCESS, result);
+            msg.sendToTarget();
+        }else{
             Log.d(TAG, "decode failed");
             Message msg = mResultHandler.obtainMessage(ResultHandler.WHAT_DECODE_FAILED);
             msg.sendToTarget();
         }
     }
+
+    private Bitmap getBitmap(byte[] data, int width, int height, int format ){
+
+        if( isYuvFormat(format) ) {
+            YuvImage yuvImage = new YuvImage(data, format, width, height, null);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            yuvImage.compressToJpeg(new Rect(0, 0, width, height), 50, outputStream);
+            byte[] bytes = outputStream.toByteArray();
+
+            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            Log.d(TAG, " yuv w:" + yuvImage.getWidth() + ",h:" + yuvImage.getHeight()
+                    + "  bytes[] length:" + bytes.length);
+            return bitmap;
+        }
+
+        return null;
+    }
+
+    private boolean isYuvFormat( int format){
+        if( format == ImageFormat.NV21 || format == ImageFormat.YUY2 ) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 }

@@ -13,7 +13,6 @@ import com.wang.chat.qrcode.DecodeHandler;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -62,25 +61,14 @@ public class CameraPreview extends SurfaceView
         }
     }
 
-    //    public void pause() {
-//        release();
-//    }
-//
+    public void stop() {
+        release();
+    }
+
     public void resume() {
         if (mCamera == null) {
             init();
-
-            mCamera.setDisplayOrientation(90);
-            setCameraParameters();
-            mCamera.autoFocus(this);
-
-            try {
-                mCamera.setPreviewDisplay(mSurfaceHolder);
-                mCamera.setPreviewCallback(this);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            mCamera.startPreview();
+            setPreview( mSurfaceHolder );
         }
     }
 
@@ -88,19 +76,6 @@ public class CameraPreview extends SurfaceView
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         Log.d(TAG, "surfaceCreated()");
-//        try {
-//            init();
-//            mCamera.setDisplayOrientation(90);
-//            setCameraParameters();
-//            mCamera.autoFocus(this);
-//
-//            mCamera.setPreviewDisplay(holder);
-//            mCamera.setPreviewCallback(this);
-//            mCamera.startPreview();
-//        } catch (Exception e) {
-//            Log.e(TAG, e.getMessage());
-//            e.printStackTrace();
-//        }
     }
 
     @Override
@@ -116,17 +91,7 @@ public class CameraPreview extends SurfaceView
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        try {
-            mCamera.setDisplayOrientation(90);
-            setCameraParameters();
-            mCamera.setPreviewDisplay(holder);
-            mCamera.setPreviewCallback(this);
-            mCamera.startPreview();
-            refocus();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        setPreview( holder );
     }
 
     @Override
@@ -135,12 +100,22 @@ public class CameraPreview extends SurfaceView
         release();
     }
 
+    private void setPreview(SurfaceHolder holder){
+        mCamera.setDisplayOrientation(90);
+        setCameraParameters();
+        try {
+            mCamera.setPreviewDisplay(holder);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        mCamera.setPreviewCallback(this);
+        mCamera.startPreview();
+        autoFocus();
+    }
 
     Camera.Size mPreviewSize;
-
     int mBestPreviewWidth = 1280;
 
-    // set scan focus area
     private void setCameraParameters() {
         Camera.Parameters para = mCamera.getParameters();
 
@@ -161,7 +136,7 @@ public class CameraPreview extends SurfaceView
         int fps = 2;
         for (int[] range : para.getSupportedPreviewFpsRange()) {
             Log.d(TAG, "range:" + range[0] + "~" + range[1]);
-            if( range[0]>fps){
+            if (range[0] > fps) {
                 fps = range[0];
                 break;
             }
@@ -169,8 +144,8 @@ public class CameraPreview extends SurfaceView
         }
         para.setPreviewFpsRange(fps, fps);
 
-        for(Integer format :para.getSupportedPreviewFormats()){
-            Log.d(TAG, "format:"+ format );
+        for (Integer format : para.getSupportedPreviewFormats()) {
+            Log.d(TAG, "format:" + format);
             mImageFormat = format;
             break;
         }
@@ -207,12 +182,12 @@ public class CameraPreview extends SurfaceView
      */
     private Rect calculateArea(float coefficient) {
         int x = getWidth() / 2, y = getHeight() / 2;
-        Log.d(TAG,"x="+x+",y="+y);
+        Log.d(TAG, "x=" + x + ",y=" + y);
         int areaSize = (int) (mFocusAreaSize * coefficient);
 
         x = -1000 + 2000 * x / getWidth();
         y = -1000 + 2000 * y / getHeight();
-        Log.d(TAG,"x="+x+",y="+y);
+        Log.d(TAG, "x=" + x + ",y=" + y);
 
 
         int left = clamp(x - areaSize / 2, -1000, 1000 - areaSize);
@@ -242,12 +217,12 @@ public class CameraPreview extends SurfaceView
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        refocus();
+        autoFocus();
 
         return super.onTouchEvent(event);
     }
 
-    private void refocus() {
+    private void autoFocus() {
         mCamera.autoFocus(this);
     }
 
@@ -256,19 +231,15 @@ public class CameraPreview extends SurfaceView
         Log.d(TAG, "onPreviewFrame data.length=" + data.length + ",  decodeHandler null?" + (mDecodeHandler == null));
         if (camera != null && mDecodeHandler != null) {
             Log.d(TAG, "send message");
-            mFrameBuffer = new byte[data.length];
-            System.arraycopy(data, 0, mFrameBuffer, 0, data.length);
-            Message msg = mDecodeHandler.obtainMessage(DecodeHandler.WHAT_DECODE, mPreviewSize.width, mPreviewSize.height, mFrameBuffer);
-            //Message msg = mDecodeHandler.obtainMessage(DecodeHandler.WHAT_DECODE, mPreviewSize.width, mPreviewSize.height, data);
+            Message msg = mDecodeHandler.obtainMessage(DecodeHandler.WHAT_DECODE, mPreviewSize.width, mPreviewSize.height, data);
             Bundle bundle = new Bundle();
-            bundle.putInt("imageFormat", mImageFormat );
+            bundle.putInt("imageFormat", mImageFormat);
             msg.setData(bundle);
             msg.sendToTarget();
             mDecodeHandler = null;
         }
     }
 
-    private volatile byte[] mFrameBuffer;
 
     private Handler mDecodeHandler;
 
