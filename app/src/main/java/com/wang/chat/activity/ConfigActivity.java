@@ -19,8 +19,7 @@ import com.wang.chat.fragment.*;
  * A screen set user's login id & icon
  * <p/>
  */
-public class ConfigActivity extends BaseActivity
-        implements OnInteractListener {
+public class ConfigActivity extends BaseActivity{
     static final String TAG = "ConfigActivity";
 
     static final int REQUEST_CODE_PICK = 0x001;
@@ -39,7 +38,6 @@ public class ConfigActivity extends BaseActivity
         transaction.commit();
     }
 
-    @Override
     public void onInteract( int resId ) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         String tag = null;

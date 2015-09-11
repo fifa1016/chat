@@ -2,57 +2,48 @@ package com.wang.chat.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.WindowManager;
+import com.wang.chat.presenter.*;
+import com.wang.chat.ChatApplication;
+import com.wang.chat.Display;
 import com.wang.chat.R;
-import com.wang.chat.fragment.OnInteractListener;
 
 
-public abstract class BaseActivity extends Activity
-        implements OnInteractListener {
+public abstract class BaseActivity extends Activity{
+
+    Display mDisplay;
+    BaseUiPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(getContentViewId());
+
+        mDisplay = newDisplay();
+
+        handleIntent(getIntent(), mDisplay );
+    }
+
+    public int getContentViewId() {
+        return R.layout.activity_base;
+    }
+
+    protected void handleIntent(Intent intent, Display display){
+
+    }
+
+    protected abstract Display newDisplay();
+    public abstract BaseUiPresenter getPresenter();
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getPresenter().attachDisplay(mDisplay);
     }
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            //TODO
-            //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY );
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            startActivity(new Intent(this, ConfigActivity.class));
-            return true;
-        } else if (id == R.id.action_about) {
-            startActivity(new Intent(this, AboutActivity.class));
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    protected void onPause() {
+        super.onPause();
+        getPresenter().detachDisplay();
     }
 }

@@ -11,14 +11,24 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
 import com.wang.chat.R;
+import com.wang.chat.activity.BaseActivity;
+import com.wang.chat.presenter.BasePresenter;
+import com.wang.chat.presenter.BaseUiPresenter;
 
 /**
  * Set user's name and image.
  */
-public class BaseFragment extends Fragment {
+public abstract class BaseFragment<UC> extends Fragment implements BaseUiPresenter.Ui<UC>{
     private static final String TAG = "AccountFragment";
 
-    private OnInteractListener mListener;
+    private BaseUiPresenter mPresenter;
+
+    public BaseUiPresenter getPresenter() {
+        if (mPresenter == null) {
+            mPresenter = ((BaseActivity) getActivity()).getPresenter();
+        }
+        return mPresenter;
+    }
 
     public BaseFragment() {
         // Required empty public constructor
@@ -29,27 +39,20 @@ public class BaseFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    public void onButtonPressed( int resId ) {
-        Log.d(TAG,"button pressed: account set ");
-        if (mListener != null) {
-            mListener.onInteract( resId );
-        }
+    public void onButtonPressed(int resId) {
+        Log.d(TAG, "button pressed: account set ");
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (OnInteractListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnInteractListener");
-        }
+    public void onResume() {
+        super.onResume();
+        getPresenter().attachUi(this);
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+    public void onPause() {
+        super.onPause();
+        getPresenter().detachUi(this);
     }
+
 }
