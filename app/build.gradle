@@ -1,6 +1,7 @@
 buildscript {
     repositories {
         jcenter()
+//        mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.1.1'
@@ -25,9 +26,12 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    lintOptions{
+        disable 'InvalidPackage'
     }
 }
 
@@ -37,5 +41,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.0.0'
     compile 'com.android.support:cardview-v7:21.0.+'
     compile 'com.android.support:recyclerview-v7:21.0.+'
-    compile 'com.google.zxing:core:3.2.1'
+//    compile 'com.google.zxing:core:3.2.1'
+    compile 'com.jakewharton:butterknife:7.0.1'
 }
