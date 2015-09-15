@@ -1,4 +1,4 @@
-package com.wang.chatlib.view;
+package com.wang.chat.view;
 
 import android.content.Context;
 import android.view.ViewGroup;

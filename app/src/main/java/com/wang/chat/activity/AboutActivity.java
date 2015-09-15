@@ -1,9 +1,7 @@
-package com.wang.chatlib.activity;
+package com.wang.chat.activity;
 
 import android.content.Intent;
-import com.wang.chatlib.Display;
-import com.wang.chatlib.R;
-import com.wang.chatlib.display.AboutDisplay;
+import com.wang.chat.display.AboutDisplay;
 import com.wang.chatlib.presenter.AboutPresenter;
 import com.wang.chatlib.presenter.BaseUiPresenter;
 

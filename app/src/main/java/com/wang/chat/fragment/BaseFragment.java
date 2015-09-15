@@ -1,8 +1,7 @@
-package com.wang.chatlib.fragment;
+package com.wang.chat.fragment;
 
 import android.app.Fragment;
-import com.wang.chatlib.R;
-import com.wang.chatlib.activity.BaseActivity;
+import com.wang.chat.activity.BaseActivity;
 import com.wang.chatlib.presenter.BaseUiPresenter;
 
 /**

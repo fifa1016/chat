@@ -1,7 +1,5 @@
 package com.wang.chatlib.presenter;
 
-import com.wang.chatlib.Display;
-
 /**
  * Created by shawn on 9/9/15.
  */

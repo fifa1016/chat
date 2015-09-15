@@ -1,4 +1,4 @@
-package com.wang.chatlib.fragment;
+package com.wang.chat.fragment;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -10,10 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import com.wang.chatlib.R;
+import com.wang.chat.R;
 import com.wang.chatlib.qrcode.ResultListener;
 import com.wang.chatlib.qrcode.ResultHandler;
-import com.wang.chatlib.view.CameraPreview;
+import com.wang.chat.view.CameraPreview;
 
 /**
  * Created by shawn on 8/27/15.
@@ -85,5 +85,10 @@ public class ScanFragment extends BaseFragment implements ResultListener {
     @Override
     public void requestPreviewFrame( Handler handler) {
         mPreview.setDecodeHandler( handler );
+    }
+
+    @Override
+    public void setCallbacks(Object callbacks) {
+
     }
 }

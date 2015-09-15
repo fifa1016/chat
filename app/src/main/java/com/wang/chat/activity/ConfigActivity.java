@@ -1,16 +1,15 @@
-package com.wang.chatlib.activity;
+package com.wang.chat.activity;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import com.wang.chatlib.Display;
-import com.wang.chatlib.R;
-import com.wang.chatlib.fragment.*;
+import com.wang.chat.R;
+import com.wang.chat.fragment.*;
 import com.wang.chatlib.presenter.BaseUiPresenter;
 
 /**

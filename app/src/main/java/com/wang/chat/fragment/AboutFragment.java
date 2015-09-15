@@ -1,7 +1,5 @@
-package com.wang.chatlib.fragment;
+package com.wang.chat.fragment;
 
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -10,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import com.wang.chatlib.R;
+import com.wang.chat.R;
 import com.wang.chatlib.presenter.AboutPresenter;
 import com.wang.chatlib.util.AppUtil;
 

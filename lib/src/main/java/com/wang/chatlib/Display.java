@@ -1,7 +1,6 @@
 package com.wang.chatlib;
 
 import android.app.Activity;
-import android.content.Intent;
 
 /**
  * Created by shawn on 9/9/15.

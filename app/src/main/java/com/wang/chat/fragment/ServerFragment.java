@@ -1,4 +1,4 @@
-package com.wang.chatlib.fragment;
+package com.wang.chat.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.wang.chatlib.R;
+import com.wang.chat.R;
 import com.wang.chatlib.util.NetworkUtil;
 import com.wang.chatlib.util.QRCodeGenerator;
 
@@ -43,5 +43,10 @@ public class ServerFragment extends BaseFragment {
         String serverInfo = "http://" + ip +":" + port;
 
         QRCodeGenerator.encodeToBitmap(serverInfo, mQrCode);
+    }
+
+    @Override
+    public void setCallbacks(Object callbacks) {
+
     }
 }

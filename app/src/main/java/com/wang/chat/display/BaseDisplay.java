@@ -1,10 +1,10 @@
-package com.wang.chatlib.display;
+package com.wang.chat.display;
 
 import android.app.Activity;
 import android.content.Intent;
 import com.wang.chatlib.Display;
-import com.wang.chatlib.activity.AboutActivity;
-import com.wang.chatlib.activity.MainActivity;
+import com.wang.chat.activity.AboutActivity;
+import com.wang.chat.activity.MainActivity;
 
 /**
  * Created by shawn on 9/11/15.

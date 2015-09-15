@@ -1,4 +1,4 @@
-package com.wang.chatlib.fragment;
+package com.wang.chat.fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
-import com.wang.chatlib.R;
+import com.wang.chat.R;
 import com.wang.chatlib.util.NetworkUtil;
 
 import java.io.File;
@@ -65,7 +65,7 @@ public class AccountFragment extends BaseFragment {
         mAvatarView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onButtonPressed(v.getId());
+                //onButtonPressed(v.getId());
             }
         });
 
@@ -79,7 +79,7 @@ public class AccountFragment extends BaseFragment {
                     return;
                 }
                 saveLoginId(id);
-                onButtonPressed(view.getId());
+                //onButtonPressed(view.getId());
             }
         });
 
@@ -146,5 +146,10 @@ public class AccountFragment extends BaseFragment {
                 ex.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void setCallbacks(Object callbacks) {
+
     }
 }

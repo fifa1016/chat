@@ -1,11 +1,11 @@
-package com.wang.chatlib.activity;
+package com.wang.chat.activity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import com.wang.chatlib.presenter.*;
 import com.wang.chatlib.Display;
-import com.wang.chatlib.R;
+import com.wang.chat.R;
+import com.wang.chatlib.presenter.BaseUiPresenter;
 
 
 public abstract class BaseActivity<D extends Display> extends Activity{
@@ -24,7 +24,7 @@ public abstract class BaseActivity<D extends Display> extends Activity{
     }
 
     public int getContentViewId(){
-        return R.id.fragment_main;
+        return R.layout.activity_base;
     }
 
     protected abstract void handleIntent(Intent intent, D display);

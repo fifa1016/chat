@@ -1,4 +1,4 @@
-package com.wang.chatlib;
+package com.wang.chat;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

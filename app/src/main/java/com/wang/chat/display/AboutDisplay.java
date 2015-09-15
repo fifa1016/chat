@@ -1,11 +1,8 @@
-package com.wang.chatlib.display;
+package com.wang.chat.display;
 
 import android.app.Activity;
-import android.content.Intent;
-import com.wang.chatlib.Display;
-import com.wang.chatlib.R;
-import com.wang.chatlib.activity.AboutActivity;
-import com.wang.chatlib.fragment.AboutFragment;
+import com.wang.chat.R;
+import com.wang.chat.fragment.AboutFragment;
 
 /**
  * Created by shawn on 9/9/15.
@@ -20,7 +17,7 @@ public class AboutDisplay extends BaseDisplay {
     public void showAboutFragment() {
         AboutFragment fragment = new AboutFragment();
         mActivity.getFragmentManager().beginTransaction()
-                .replace(R.id.fragment_main, fragment)
+                .replace(R.id.activity_container, fragment)
                 .commit();
     }
 
