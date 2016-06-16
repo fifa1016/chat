@@ -1,0 +1,5 @@
+ltanguage: java
+jdk:
+  - oraclejdk7
+
+script: "./gradlew test"

@@ -39,6 +39,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':lib')
+    compile project(':websocket')
     compile 'com.android.support:cardview-v7:23.0.+'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:recyclerview-v7:23.0.+'
