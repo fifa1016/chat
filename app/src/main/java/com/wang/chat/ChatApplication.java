@@ -8,7 +8,7 @@ import android.support.multidex.MultiDex;
  * Created by shawn on 8/24/15.
  */
 public class ChatApplication extends Application{
-
+    //TODO uncaughtexception
     public static ChatApplication from(Context context){
         return (ChatApplication) context.getApplicationContext();
     }

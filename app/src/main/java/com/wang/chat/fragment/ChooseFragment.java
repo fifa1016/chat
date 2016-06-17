@@ -49,8 +49,4 @@ public class ChooseFragment extends BaseFragment {
 
     }
 
-    @Override
-    public void setCallbacks(Object callbacks) {
-
-    }
 }

@@ -45,8 +45,4 @@ public class ServerFragment extends BaseFragment {
         QRCodeGenerator.encodeToBitmap(serverInfo, mQrCode);
     }
 
-    @Override
-    public void setCallbacks(Object callbacks) {
-
-    }
 }

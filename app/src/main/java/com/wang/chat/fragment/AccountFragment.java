@@ -148,8 +148,4 @@ public class AccountFragment extends BaseFragment {
         }
     }
 
-    @Override
-    public void setCallbacks(Object callbacks) {
-
-    }
 }

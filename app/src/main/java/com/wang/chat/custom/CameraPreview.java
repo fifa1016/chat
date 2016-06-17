@@ -1,4 +1,4 @@
-package com.wang.chat.view;
+package com.wang.chat.custom;
 
 import android.content.Context;
 import android.graphics.*;

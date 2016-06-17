@@ -7,10 +7,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.util.Log;
-import com.wang.chatlib.Display;
 import com.wang.chat.R;
 import com.wang.chat.fragment.*;
-import com.wang.chatlib.presenter.BaseUiPresenter;
 
 /**
  * A screen set user's login id & icon
@@ -29,20 +27,6 @@ public class ConfigActivity extends BaseActivity{
         return R.layout.activity_config;
     }
 
-    @Override
-    protected void handleIntent(Intent intent, Display display) {
-
-    }
-
-    @Override
-    protected Display newDisplay() {
-        return null;
-    }
-
-    @Override
-    public BaseUiPresenter getPresenter() {
-        return null;
-    }
 
     public void onInteract( int resId ) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();

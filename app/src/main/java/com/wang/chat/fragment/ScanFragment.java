@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import com.wang.chat.R;
 import com.wang.chatlib.qrcode.ResultListener;
 import com.wang.chatlib.qrcode.ResultHandler;
-import com.wang.chat.view.CameraPreview;
+import com.wang.chat.custom.CameraPreview;
 
 /**
  * Created by shawn on 8/27/15.
@@ -87,8 +87,4 @@ public class ScanFragment extends BaseFragment implements ResultListener {
         mPreview.setDecodeHandler( handler );
     }
 
-    @Override
-    public void setCallbacks(Object callbacks) {
-
-    }
 }
