@@ -3,19 +3,20 @@ package com.wang.chat.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.wang.chat.R;
-
-
 public abstract class BaseActivity extends AppCompatActivity {
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getContentViewId());
+        setContentView(getContentViewLayout());
+        init();
     }
 
-    public abstract int getContentViewId();
+    public abstract int getContentViewLayout();
+
+    public void init() {
+    }
 
     @Override
     protected void onResume() {

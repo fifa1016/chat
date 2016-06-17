@@ -1,16 +1,24 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme"
-           parent="android:Theme.Holo.Light.NoActionBar">
+    <style name="Base.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+    <style name="AppTheme" parent="Base.AppTheme" />
+
+    <style name="Toolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="ChatText" parent="android:TextAppearance.Holo.Widget.TextView">
         <item name="android:textSize">18sp</item>
     </style>
+
     <style name="ChatText.Title" parent="ChatText">
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="ChatButton" parent="android:TextAppearance.Holo.Widget.Button">
         <item name="android:textSize">18sp</item>
     </style>

@@ -1,4 +1,4 @@
-package com.wang.chat.fragment;
+package com.wang.chat.view.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,16 +21,13 @@ public class ServerFragment extends BaseFragment {
     private EditText mEditPort;
     private ImageView mQrCode;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_server, container, false);
+    public int getViewLayout() {
+        return R.layout.fragment_server;
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
+    public void initViews(View view) {
         String ip = NetworkUtil.getIPV4Address();
         mTxtIp = (TextView) view.findViewById(R.id.server_ip);
         mTxtIp.setText( ip );
@@ -43,6 +40,11 @@ public class ServerFragment extends BaseFragment {
         String serverInfo = "http://" + ip +":" + port;
 
         QRCodeGenerator.encodeToBitmap(serverInfo, mQrCode);
+    }
+
+    @Override
+    public void initData() {
+
     }
 
 }

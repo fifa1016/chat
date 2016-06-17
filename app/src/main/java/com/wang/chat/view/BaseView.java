@@ -1,4 +1,4 @@
-package com.wang.chat.fragment;
+package com.wang.chat.view;
 
 import com.wang.chat.presenter.BasePresenter;
 

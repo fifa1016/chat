@@ -1,4 +1,4 @@
-package com.wang.chat.fragment;
+package com.wang.chat.view.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
 import com.wang.chat.R;
 
 /**
@@ -16,17 +17,13 @@ public class ChooseFragment extends BaseFragment {
 
     private Button mStartServerButton, mScanButton;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_choose, container, false);
+    public int getViewLayout() {
+        return R.layout.fragment_choose;
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-
+    public void initViews(View view) {
         mStartServerButton = (Button) view.findViewById(R.id.start_server_button);
         mStartServerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,11 +38,11 @@ public class ChooseFragment extends BaseFragment {
                 //onButtonPressed(v.getId());
             }
         });
+
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void initData() {
 
     }
 

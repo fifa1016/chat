@@ -1,4 +1,4 @@
-package com.wang.chat.fragment;
+package com.wang.chat.view.fragment;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import com.wang.chat.R;
 import com.wang.chatlib.qrcode.ResultListener;
 import com.wang.chatlib.qrcode.ResultHandler;
-import com.wang.chat.custom.CameraPreview;
+import com.wang.chat.view.custom.CameraPreview;
 
 /**
  * Created by shawn on 8/27/15.
@@ -25,16 +25,13 @@ public class ScanFragment extends BaseFragment implements ResultListener {
     private View mMaskView;
     private ImageView mImageScan;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_scan, container, false);
-        return view;
+    public int getViewLayout() {
+        return R.layout.fragment_scan;
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void initViews(View view) {
         mPreview = (CameraPreview)view.findViewById(R.id.scan_preview);
         mMaskView = view.findViewById(R.id.scan_mask);
         mPreview.setFocusAreaSize(300);
@@ -44,6 +41,11 @@ public class ScanFragment extends BaseFragment implements ResultListener {
         if( mResultHandler == null ){
             mResultHandler = new ResultHandler( this );
         }
+    }
+
+    @Override
+    public void initData() {
+
     }
 
     @Override

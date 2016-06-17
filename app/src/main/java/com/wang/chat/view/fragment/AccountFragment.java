@@ -1,4 +1,4 @@
-package com.wang.chat.fragment;
+package com.wang.chat.view.fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -14,7 +14,9 @@ import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
+
 import com.wang.chat.R;
+import com.wang.chat.contract.EditAccountContract;
 import com.wang.chatlib.util.NetworkUtil;
 
 import java.io.File;
@@ -25,8 +27,10 @@ import java.io.IOException;
 /**
  * Set user's name and image.
  */
-public class AccountFragment extends BaseFragment {
+public class AccountFragment extends BaseFragment implements EditAccountContract.View {
     private static final String TAG = "AccountFragment";
+
+    EditAccountContract.Presenter presenter;
 
     // UI references.
     private AutoCompleteTextView mLoginIdView;
@@ -39,15 +43,12 @@ public class AccountFragment extends BaseFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account, container, false);
+    public int getViewLayout() {
+        return R.layout.fragment_account;
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void initViews(View view) {
         // Set up the login form.
         mLoginIdView = (AutoCompleteTextView) view.findViewById(R.id.login_id);
         String nickname = getLoginId();
@@ -85,6 +86,11 @@ public class AccountFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void initData() {
+
+    }
+
     private static final String PREF_NICKNAME = "nickname";
 
     private String getLoginId() {
@@ -113,13 +119,14 @@ public class AccountFragment extends BaseFragment {
     }
 
     public void setAvatar(String path) {
-        Log.d(TAG, "setAvatar() path="+path);
+        Log.d(TAG, "setAvatar() path=" + path);
         Bitmap bitmap = BitmapFactory.decodeFile(path);
-        Log.d(TAG," bitmap==null:"+ (bitmap==null) );
+        Log.d(TAG, " bitmap==null:" + (bitmap == null));
         mAvatarView.setImageBitmap(bitmap);
         saveAvatar(bitmap);
     }
-    public void setAvatar( Bitmap bitmap ){
+
+    public void setAvatar(Bitmap bitmap) {
         mAvatarView.setImageBitmap(bitmap);
         saveAvatar(bitmap);
     }
@@ -148,4 +155,8 @@ public class AccountFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void setPresenter(EditAccountContract.Presenter presenter) {
+        this.presenter = presenter;
+    }
 }
