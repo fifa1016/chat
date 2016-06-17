@@ -1,15 +1,15 @@
 package com.wang.chat.view.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -67,6 +67,14 @@ public class AccountFragment extends BaseFragment implements EditAccountContract
             @Override
             public void onClick(View v) {
                 //onButtonPressed(v.getId());
+                Intent pickIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                pickIntent.putExtra("crop", "true");
+                pickIntent.putExtra("aspectX", 1);
+                pickIntent.putExtra("aspectY", 1);
+                pickIntent.putExtra("outputX", 200);
+                pickIntent.putExtra("outputY", 200);
+                pickIntent.putExtra("return-data", true);
+                startActivityForResult(pickIntent, REQUEST_CODE_PICK);
             }
         });
 
@@ -118,12 +126,19 @@ public class AccountFragment extends BaseFragment implements EditAccountContract
         }
     }
 
-    public void setAvatar(String path) {
-        Log.d(TAG, "setAvatar() path=" + path);
-        Bitmap bitmap = BitmapFactory.decodeFile(path);
-        Log.d(TAG, " bitmap==null:" + (bitmap == null));
-        mAvatarView.setImageBitmap(bitmap);
-        saveAvatar(bitmap);
+    private static final int REQUEST_CODE_PICK = 001;
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_PICK) {
+            if (resultCode == AppCompatActivity.RESULT_OK) {
+                Bitmap bitmap = data.getParcelableExtra("data");
+                if( bitmap != null ){
+                    mAvatarView.setImageBitmap(bitmap);
+                    saveAvatar(bitmap);
+                }
+            }
+        }
     }
 
     public void setAvatar(Bitmap bitmap) {
