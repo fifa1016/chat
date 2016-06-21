@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -16,21 +15,22 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.wang.chat.R;
-import com.wang.chat.contract.EditAccountContract;
+import com.wang.chat.contract.AccountContract;
 import com.wang.chatlib.util.NetworkUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Set user's name and image.
  */
-public class AccountFragment extends BaseFragment implements EditAccountContract.View {
+public class AccountFragment extends BaseFragment implements AccountContract.View {
     private static final String TAG = "AccountFragment";
 
-    EditAccountContract.Presenter presenter;
+    AccountContract.Presenter presenter;
 
     // UI references.
     private AutoCompleteTextView mLoginIdView;
@@ -66,14 +66,14 @@ public class AccountFragment extends BaseFragment implements EditAccountContract
         mAvatarView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //onButtonPressed(v.getId());
-                Intent pickIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                pickIntent.putExtra("crop", "true");
-                pickIntent.putExtra("aspectX", 1);
-                pickIntent.putExtra("aspectY", 1);
-                pickIntent.putExtra("outputX", 200);
-                pickIntent.putExtra("outputY", 200);
-                pickIntent.putExtra("return-data", true);
+                Intent pickIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                pickIntent.setType("image/*");
+//                pickIntent.putExtra("crop", "true");
+//                pickIntent.putExtra("aspectX", 1);
+//                pickIntent.putExtra("aspectY", 1);
+//                pickIntent.putExtra("outputX", 200);
+//                pickIntent.putExtra("outputY", 200);
+//                pickIntent.putExtra("return-data", true);
                 startActivityForResult(pickIntent, REQUEST_CODE_PICK);
             }
         });
@@ -130,13 +130,26 @@ public class AccountFragment extends BaseFragment implements EditAccountContract
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(TAG, "onActivityResult: request code=" + requestCode + ",resultCode=" + resultCode);
         if (requestCode == REQUEST_CODE_PICK) {
             if (resultCode == AppCompatActivity.RESULT_OK) {
-                Bitmap bitmap = data.getParcelableExtra("data");
-                if( bitmap != null ){
-                    mAvatarView.setImageBitmap(bitmap);
-                    saveAvatar(bitmap);
+                if (data == null) {
+                    Log.e(TAG, "onActivityResult: pick image, data null");
                 }
+                Log.d(TAG, "onActivityResult: data.getData()=" + data.getDataString());
+                try {
+                    InputStream inputStream = getActivity().getContentResolver().openInputStream(data.getData());
+                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                    if (bitmap != null) {
+                        mAvatarView.setImageBitmap(bitmap);
+                        saveAvatar(bitmap);
+                    } else {
+                        Log.d(TAG, "onActivityResult: bitmap null!");
+                    }
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
             }
         }
     }
@@ -171,7 +184,7 @@ public class AccountFragment extends BaseFragment implements EditAccountContract
     }
 
     @Override
-    public void setPresenter(EditAccountContract.Presenter presenter) {
+    public void setPresenter(AccountContract.Presenter presenter) {
         this.presenter = presenter;
     }
 }

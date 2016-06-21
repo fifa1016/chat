@@ -89,6 +89,7 @@ public class ConfigActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_CODE_PICK) {
                 Bitmap bitmap = data.getParcelableExtra("data");

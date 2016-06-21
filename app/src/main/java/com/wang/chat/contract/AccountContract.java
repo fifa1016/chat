@@ -6,7 +6,7 @@ import com.wang.chat.presenter.BasePresenter;
 /**
  * Created by wang on 16-6-17.
  */
-public interface EditAccountContract {
+public interface AccountContract {
     interface View extends BaseView<Presenter>{
 
     }
