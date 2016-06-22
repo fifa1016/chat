@@ -3,30 +3,34 @@ package com.wang.chat.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.wang.chat.R;
+
 public abstract class BaseActivity extends AppCompatActivity {
 
-    private Display display;
+    protected Display display;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentViewLayout());
 
+        display = new AndroidDisplay(this);
         init();
     }
 
-    public abstract int getContentViewLayout();
+    public int getContentViewLayout(){
+        return R.layout.activity_base;
+    }
 
     public void init() {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
+    public void onBackPressed() {
+        if( getFragmentManager().getBackStackEntryCount() > 1 ){
+            getFragmentManager().popBackStack();
+        }else {
+            super.onBackPressed();
+        }
     }
 }

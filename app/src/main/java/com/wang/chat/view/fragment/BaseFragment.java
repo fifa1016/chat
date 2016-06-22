@@ -7,11 +7,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.wang.chat.activity.Display;
+
 /**
  *
  */
 public abstract class BaseFragment extends Fragment {
     private static final String TAG = "BaseFragment";
+    private Display display;
+
+    public void setDisplay(Display display) {
+        this.display = display;
+    }
+
+    public Display getDisplay() {
+        return display;
+    }
 
     @Nullable
     @Override
@@ -29,5 +40,6 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public abstract void initViews(View view);
+
     public abstract void initData();
 }

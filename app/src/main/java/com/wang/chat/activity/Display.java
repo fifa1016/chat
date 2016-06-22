@@ -5,4 +5,7 @@ package com.wang.chat.activity;
  */
 public interface Display {
     void showAccount();
+    void showChoose();
+    void showStartAsServer();
+    void showScanServer();
 }

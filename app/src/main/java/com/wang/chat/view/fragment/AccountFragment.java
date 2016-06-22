@@ -33,9 +33,9 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
     AccountContract.Presenter presenter;
 
     // UI references.
-    private AutoCompleteTextView mLoginIdView;
-    private ImageView mAvatarView;
-    private Button mLoginButton;
+    private AutoCompleteTextView loginIdView;
+    private ImageView avatarView;
+    private Button btnNext;
 
 
     public AccountFragment() {
@@ -50,45 +50,40 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
     @Override
     public void initViews(View view) {
         // Set up the login form.
-        mLoginIdView = (AutoCompleteTextView) view.findViewById(R.id.login_id);
+        loginIdView = (AutoCompleteTextView) view.findViewById(R.id.login_id);
         String nickname = getLoginId();
         if (nickname == null || nickname.equals("")) {
-            mLoginIdView.setText(NetworkUtil.getDeviceName());
+            loginIdView.setText(NetworkUtil.getDeviceName());
         } else {
-            mLoginIdView.setText(nickname);
+            loginIdView.setText(nickname);
         }
 
-        mAvatarView = (ImageView) view.findViewById(R.id.avatar_image);
+        avatarView = (ImageView) view.findViewById(R.id.avatar_image);
         Bitmap avatarBitmap = getAvatar();
         if (avatarBitmap != null) {
-            mAvatarView.setImageBitmap(avatarBitmap);
+            avatarView.setImageBitmap(avatarBitmap);
         }
-        mAvatarView.setOnClickListener(new View.OnClickListener() {
+        avatarView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent pickIntent = new Intent(Intent.ACTION_GET_CONTENT);
                 pickIntent.setType("image/*");
-//                pickIntent.putExtra("crop", "true");
-//                pickIntent.putExtra("aspectX", 1);
-//                pickIntent.putExtra("aspectY", 1);
-//                pickIntent.putExtra("outputX", 200);
-//                pickIntent.putExtra("outputY", 200);
-//                pickIntent.putExtra("return-data", true);
                 startActivityForResult(pickIntent, REQUEST_CODE_PICK);
             }
         });
 
-        mLoginButton = (Button) view.findViewById(R.id.login_button);
-        mLoginButton.setOnClickListener(new View.OnClickListener() {
+        btnNext = (Button) view.findViewById(R.id.btn_account_next);
+        btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String id = mLoginIdView.getText().toString();
+                String id = loginIdView.getText().toString();
                 if (TextUtils.isEmpty(id)) {
-                    mLoginIdView.setError(getString(R.string.id_empty_error));
+                    loginIdView.setError(getString(R.string.id_empty_error));
                     return;
                 }
                 saveLoginId(id);
-                //onButtonPressed(view.getId());
+
+                AccountFragment.this.getDisplay().showChoose();
             }
         });
 
@@ -113,7 +108,18 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
         editor.commit();
     }
 
+    @Override
+    public void showLoginId() {
+
+    }
+
     private static final String FILE_NAME = "avatar_bitmap";
+
+
+    @Override
+    public void showAvatar() {
+
+    }
 
     private Bitmap getAvatar() {
         File file = new File(getActivity().getFilesDir(), FILE_NAME);
@@ -139,10 +145,11 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
                 Log.d(TAG, "onActivityResult: data.getData()=" + data.getDataString());
                 try {
                     InputStream inputStream = getActivity().getContentResolver().openInputStream(data.getData());
+                    saveAvatar(inputStream);
+
                     Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                     if (bitmap != null) {
-                        mAvatarView.setImageBitmap(bitmap);
-                        saveAvatar(bitmap);
+                        avatarView.setImageBitmap(bitmap);
                     } else {
                         Log.d(TAG, "onActivityResult: bitmap null!");
                     }
@@ -154,31 +161,40 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
         }
     }
 
-    public void setAvatar(Bitmap bitmap) {
-        mAvatarView.setImageBitmap(bitmap);
-        saveAvatar(bitmap);
-    }
 
-    private void saveAvatar(Bitmap bitmap) {
+    private void saveAvatar(InputStream inputStream) {
         File file = new File(getActivity().getFilesDir(), FILE_NAME);
         FileOutputStream outputStream = null;
         try {
             file.createNewFile();
-
             outputStream = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-            outputStream.flush();
+
+            int read = 0;
+            byte[] bytes = new byte[1024];
+
+            while ((read = inputStream.read(bytes)) != -1) {
+                outputStream.write(bytes, 0, read);
+            }
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (outputStream != null) {
-                    outputStream.close();
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (IOException ex) {
-                ex.printStackTrace();
+            }
+            if (outputStream != null) {
+                try {
+                    outputStream.flush();
+                    outputStream.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
     }
