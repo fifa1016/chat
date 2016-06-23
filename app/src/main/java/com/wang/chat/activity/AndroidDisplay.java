@@ -1,7 +1,8 @@
 package com.wang.chat.activity;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
+import android.os.Build;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.wang.chat.R;
@@ -9,6 +10,7 @@ import com.wang.chat.presenter.AccountPresenter;
 import com.wang.chat.view.fragment.AccountFragment;
 import com.wang.chat.view.fragment.BaseFragment;
 import com.wang.chat.view.fragment.ChooseFragment;
+import com.wang.chat.view.fragment.ScanFragment;
 import com.wang.chat.view.fragment.ServerFragment;
 
 /**
@@ -24,7 +26,7 @@ public class AndroidDisplay implements Display {
 
     @Override
     public void showAccount() {
-        FragmentTransaction transaction = activity.getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
 
         AccountFragment frag = new AccountFragment();
         frag.setDisplay(this);
@@ -38,7 +40,7 @@ public class AndroidDisplay implements Display {
 
     @Override
     public void showChoose() {
-        FragmentTransaction transaction = activity.getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
         BaseFragment frag = new ChooseFragment();
         frag.setDisplay(this);
         transaction.replace(R.id.activity_container, frag);
@@ -48,7 +50,7 @@ public class AndroidDisplay implements Display {
 
     @Override
     public void showStartAsServer() {
-        FragmentTransaction transaction = activity.getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
         BaseFragment frag = new ServerFragment();
         frag.setDisplay(this);
         transaction.replace(R.id.activity_container, frag);
@@ -58,8 +60,12 @@ public class AndroidDisplay implements Display {
 
     @Override
     public void showScanServer() {
-        FragmentTransaction transaction = activity.getFragmentManager().beginTransaction();
-        BaseFragment frag = new ChooseFragment();
+        if(Build.VERSION.SDK_INT > 23 ){
+
+        }
+
+        FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
+        BaseFragment frag = new ScanFragment();
         frag.setDisplay(this);
         transaction.replace(R.id.activity_container, frag);
         transaction.addToBackStack("scan");

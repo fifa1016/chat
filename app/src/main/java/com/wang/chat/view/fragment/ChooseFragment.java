@@ -8,11 +8,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.wang.chat.R;
+import com.wang.chat.contract.ChooseContract;
 
 /**
  * Created by shawn on 8/26/15.
  */
-public class ChooseFragment extends BaseFragment {
+public class ChooseFragment extends BaseFragment implements ChooseContract.View {
     private static final String TAG = "ChooseFragment";
 
     private Button mStartServerButton, mScanButton;
@@ -28,14 +29,14 @@ public class ChooseFragment extends BaseFragment {
         mStartServerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //onButtonPressed(v.getId());
+                ChooseFragment.this.getDisplay().showStartAsServer();
             }
         });
         mScanButton = (Button) view.findViewById(R.id.scan_button);
         mScanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //onButtonPressed(v.getId());
+                ChooseFragment.this.getDisplay().showScanServer();
             }
         });
 
@@ -46,4 +47,8 @@ public class ChooseFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void setPresenter(ChooseContract.Presenter presenter) {
+
+    }
 }

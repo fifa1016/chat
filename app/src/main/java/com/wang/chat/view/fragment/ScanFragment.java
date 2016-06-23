@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.wang.chat.R;
+import com.wang.chat.contract.ScanContract;
 import com.wang.chatlib.qrcode.ResultListener;
 import com.wang.chatlib.qrcode.ResultHandler;
 import com.wang.chat.view.custom.CameraPreview;
@@ -18,7 +19,7 @@ import com.wang.chat.view.custom.CameraPreview;
 /**
  * Created by shawn on 8/27/15.
  */
-public class ScanFragment extends BaseFragment implements ResultListener {
+public class ScanFragment extends BaseFragment implements ScanContract.View, ResultListener {
     private static final String TAG = ScanFragment.class.getSimpleName();
 
     private CameraPreview mPreview;
@@ -89,4 +90,7 @@ public class ScanFragment extends BaseFragment implements ResultListener {
         mPreview.setDecodeHandler( handler );
     }
 
+    @Override
+    public void setPresenter(ScanContract.Presenter presenter) {
+    }
 }
