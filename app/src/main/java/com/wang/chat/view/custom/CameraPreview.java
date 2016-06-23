@@ -9,6 +9,7 @@ import android.os.Message;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.*;
+
 import com.wang.chatlib.qrcode.DecodeHandler;
 
 import java.io.IOException;
@@ -40,15 +41,17 @@ public class CameraPreview extends SurfaceView
         init();
     }
 
-    private void init() {
+    public void init() {
         Log.d(TAG, "init()");
         if (mCamera == null) {
+            Log.d(TAG, "init: ", new Throwable());
             mCamera = Camera.open();
 
             mSurfaceHolder = getHolder();
             mSurfaceHolder.addCallback(this);
             // set for prior 3.0
             mSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+
         }
     }
 
@@ -68,7 +71,7 @@ public class CameraPreview extends SurfaceView
     public void resume() {
         if (mCamera == null) {
             init();
-            setPreview( mSurfaceHolder );
+            setPreview(mSurfaceHolder);
         }
     }
 
@@ -91,7 +94,7 @@ public class CameraPreview extends SurfaceView
         } catch (Exception e) {
             e.printStackTrace();
         }
-        setPreview( holder );
+        setPreview(holder);
     }
 
     @Override
@@ -100,7 +103,7 @@ public class CameraPreview extends SurfaceView
         release();
     }
 
-    private void setPreview(SurfaceHolder holder){
+    private void setPreview(SurfaceHolder holder) {
         mCamera.setDisplayOrientation(90);
         setCameraParameters();
         try {

@@ -1,15 +1,18 @@
 package com.wang.chat.view.fragment;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Bundle;
+import android.os.Build;
 import android.os.Handler;
-import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
+
 import com.wang.chat.R;
 import com.wang.chat.contract.ScanContract;
 import com.wang.chatlib.qrcode.ResultListener;
@@ -22,7 +25,7 @@ import com.wang.chat.view.custom.CameraPreview;
 public class ScanFragment extends BaseFragment implements ScanContract.View, ResultListener {
     private static final String TAG = ScanFragment.class.getSimpleName();
 
-    private CameraPreview mPreview;
+    private CameraPreview cameraPreview;
     private View mMaskView;
     private ImageView mImageScan;
 
@@ -33,15 +36,16 @@ public class ScanFragment extends BaseFragment implements ScanContract.View, Res
 
     @Override
     public void initViews(View view) {
-        mPreview = (CameraPreview)view.findViewById(R.id.scan_preview);
+        cameraPreview = (CameraPreview) view.findViewById(R.id.scan_preview);
         mMaskView = view.findViewById(R.id.scan_mask);
-        mPreview.setFocusAreaSize(300);
+        cameraPreview.setFocusAreaSize(300);
 
-        mImageScan = (ImageView)view.findViewById(R.id.imgScan);
+        mImageScan = (ImageView) view.findViewById(R.id.imgScan);
 
-        if( mResultHandler == null ){
-            mResultHandler = new ResultHandler( this );
+        if (mResultHandler == null) {
+            mResultHandler = new ResultHandler(this);
         }
+
     }
 
     @Override
@@ -49,45 +53,42 @@ public class ScanFragment extends BaseFragment implements ScanContract.View, Res
 
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-    }
+    private static final int PER_REQ_CODE = 1;
+
 
     @Override
     public void onPause() {
         super.onPause();
-        mPreview.stop();
+        cameraPreview.stop();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mPreview.resume();
-        //mPreview.setDecodeHandler( mResultHandler.getDecodeHandler() );
+        cameraPreview.resume();
     }
 
     private ResultHandler mResultHandler;
 
     @Override
-    public void onResult(String result, Bitmap bitmap){
+    public void onResult(String result, Bitmap bitmap) {
 
-        if( result!=null && !result.trim().equals("")){
+        if (result != null && !result.trim().equals("")) {
             Uri uri = Uri.parse(result);
-            Log.d(TAG,"host:"+uri.getHost() +", port:"+uri.getPort() );
+            Log.d(TAG, "host:" + uri.getHost() + ", port:" + uri.getPort());
         }
 
     }
 
     @Override
     public void onDecodeHandlerReady(Handler handler) {
-        Log.d(TAG,"onDecodeHandlerReady handler==null?"+(handler==null) );
-        mPreview.setDecodeHandler( handler );
+        Log.d(TAG, "onDecodeHandlerReady handler==null?" + (handler == null));
+        cameraPreview.setDecodeHandler(handler);
     }
 
     @Override
-    public void requestPreviewFrame( Handler handler) {
-        mPreview.setDecodeHandler( handler );
+    public void requestPreviewFrame(Handler handler) {
+        cameraPreview.setDecodeHandler(handler);
     }
 
     @Override

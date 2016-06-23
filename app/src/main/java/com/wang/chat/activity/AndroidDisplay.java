@@ -1,9 +1,13 @@
 package com.wang.chat.activity;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.wang.chat.R;
 import com.wang.chat.presenter.AccountPresenter;
@@ -12,6 +16,8 @@ import com.wang.chat.view.fragment.BaseFragment;
 import com.wang.chat.view.fragment.ChooseFragment;
 import com.wang.chat.view.fragment.ScanFragment;
 import com.wang.chat.view.fragment.ServerFragment;
+
+import java.security.Permission;
 
 /**
  * Created by wang on 16-6-21.
@@ -60,7 +66,13 @@ public class AndroidDisplay implements Display {
 
     @Override
     public void showScanServer() {
-        if(Build.VERSION.SDK_INT > 23 ){
+        if (Build.VERSION.SDK_INT >= 23
+                &&
+                ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(activity, "Have no camera permission", Toast.LENGTH_SHORT)
+                    .show();
+            return;
 
         }
 
