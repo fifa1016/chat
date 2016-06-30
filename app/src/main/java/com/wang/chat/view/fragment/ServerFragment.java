@@ -9,13 +9,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.wang.chat.R;
+import com.wang.chat.contract.ServerContract;
 import com.wang.chatlib.util.NetworkUtil;
 import com.wang.chatlib.util.QRCodeGenerator;
 
 /**
  * Created by shawn on 8/26/15.
  */
-public class ServerFragment extends BaseFragment {
+public class ServerFragment extends BaseFragment implements ServerContract.View{
 
     private TextView mTxtIp;
     private EditText mEditPort;
@@ -47,4 +48,8 @@ public class ServerFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void setPresenter(ServerContract.Presenter presenter) {
+
+    }
 }

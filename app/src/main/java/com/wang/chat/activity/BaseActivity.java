@@ -27,8 +27,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if( getFragmentManager().getBackStackEntryCount() > 1 ){
-            getFragmentManager().popBackStack();
+        if( getSupportFragmentManager().getBackStackEntryCount() > 1 ){
+            getSupportFragmentManager().popBackStack();
         }else {
             super.onBackPressed();
         }

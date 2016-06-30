@@ -29,7 +29,7 @@ public class ProfileManager {
         if (instance == null) {
             synchronized (ProfileManager.class) {
                 if (instance == null) {
-                    instance = new ProfileManager(context);
+                    instance = new ProfileManager(context.getApplicationContext());
                 }
             }
         }

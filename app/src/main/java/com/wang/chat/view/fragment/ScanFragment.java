@@ -8,11 +8,13 @@ import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.zxing.Result;
 import com.wang.chat.R;
 import com.wang.chat.contract.ScanContract;
 import com.wang.chatlib.qrcode.ResultListener;
@@ -53,8 +55,6 @@ public class ScanFragment extends BaseFragment implements ScanContract.View, Res
 
     }
 
-    private static final int PER_REQ_CODE = 1;
-
 
     @Override
     public void onPause() {
@@ -71,10 +71,11 @@ public class ScanFragment extends BaseFragment implements ScanContract.View, Res
     private ResultHandler mResultHandler;
 
     @Override
-    public void onResult(String result, Bitmap bitmap) {
+    public void onResult(Result result, Bitmap bitmap) {
+        String text = result.getText().trim();
 
-        if (result != null && !result.trim().equals("")) {
-            Uri uri = Uri.parse(result);
+        if (result != null && !TextUtils.isEmpty(text)) {
+            Uri uri = Uri.parse(text);
             Log.d(TAG, "host:" + uri.getHost() + ", port:" + uri.getPort());
         }
 

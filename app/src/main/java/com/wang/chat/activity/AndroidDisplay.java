@@ -1,14 +1,12 @@
 package com.wang.chat.activity;
 
 import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Build;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.tbruyelle.rxpermissions.RxPermissions;
 import com.wang.chat.R;
 import com.wang.chat.presenter.AccountPresenter;
 import com.wang.chat.view.fragment.AccountFragment;
@@ -17,12 +15,14 @@ import com.wang.chat.view.fragment.ChooseFragment;
 import com.wang.chat.view.fragment.ScanFragment;
 import com.wang.chat.view.fragment.ServerFragment;
 
-import java.security.Permission;
+import rx.functions.Action1;
+
 
 /**
  * Created by wang on 16-6-21.
  */
 public class AndroidDisplay implements Display {
+    private static final String TAG = "AndroidDisplay";
 
     private AppCompatActivity activity;
 
@@ -66,21 +66,36 @@ public class AndroidDisplay implements Display {
 
     @Override
     public void showScanServer() {
-        if (Build.VERSION.SDK_INT >= 23
-                &&
-                ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA)
-                        != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(activity, "Have no camera permission", Toast.LENGTH_SHORT)
-                    .show();
-            return;
+//        if (Build.VERSION.SDK_INT >= 23
+//                &&
+//                ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA)
+//                        != PackageManager.PERMISSION_GRANTED) {
+//            Toast.makeText(activity, "Have no camera permission", Toast.LENGTH_SHORT)
+//                    .show();
+//            return;
+//
+//        }
+        RxPermissions.getInstance(activity)
+                .request(Manifest.permission.CAMERA)
+                .subscribe(new Action1<Boolean>() {
+                               @Override
+                               public void call(Boolean granted) {
+                                   if (granted) {
+                                       Log.d(TAG, "call: camera granted!");
+                                       FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
+                                       BaseFragment frag = new ScanFragment();
+                                       frag.setDisplay(AndroidDisplay.this);
+                                       transaction.replace(R.id.activity_container, frag);
+                                       transaction.addToBackStack("scan");
+                                       transaction.commit();
+                                   } else {
+                                       Log.d(TAG, "call: camera NOT granted");
+                                       Toast.makeText(activity, "Have no camera permission", Toast.LENGTH_SHORT)
+                                               .show();
+                                   }
+                               } //call()
+                           }//Action1
+                );
 
-        }
-
-        FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
-        BaseFragment frag = new ScanFragment();
-        frag.setDisplay(this);
-        transaction.replace(R.id.activity_container, frag);
-        transaction.addToBackStack("scan");
-        transaction.commit();
     }
 }

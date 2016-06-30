@@ -3,6 +3,8 @@ package com.wang.chatlib.qrcode;
 import android.os.Handler;
 import android.os.Message;
 
+import com.google.zxing.Result;
+
 /**
  * Created by shawn on 9/5/15.
  */
@@ -35,7 +37,7 @@ public class ResultHandler extends Handler {
                 mListener.onDecodeHandlerReady(decodeHandler);
                 break;
             case WHAT_DECODE_SUCCESS:
-                String result = (String) msg.obj;
+                Result result = (Result) msg.obj;
                 mListener.onResult(result, null);
                 break;
             case WHAT_DECODE_FAILED:
