@@ -5,12 +5,12 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 
 import com.wang.chat.data.ProfileManager;
+import com.wang.chat.exception.CrashHandler;
 
 /**
  * Created by shawn on 8/24/15.
  */
 public class ChatApplication extends Application {
-    //TODO uncaughtexception
     public static ChatApplication from(Context context) {
         return (ChatApplication) context.getApplicationContext();
     }
@@ -19,6 +19,7 @@ public class ChatApplication extends Application {
     public void onCreate() {
         super.onCreate();
         ProfileManager.init(this);
+        Thread.setDefaultUncaughtExceptionHandler(new CrashHandler(this));
     }
 
 
