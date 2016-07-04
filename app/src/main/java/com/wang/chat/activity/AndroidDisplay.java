@@ -35,9 +35,9 @@ public class AndroidDisplay implements Display {
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
 
         AccountFragment frag = new AccountFragment();
-        frag.setDisplay(this);
         AccountPresenter presenter = new AccountPresenter(frag);
         frag.setPresenter(presenter);
+        frag.setDisplay(this);
 
         transaction.replace(R.id.activity_container, frag);
         transaction.addToBackStack("account");
@@ -66,15 +66,6 @@ public class AndroidDisplay implements Display {
 
     @Override
     public void showScanServer() {
-//        if (Build.VERSION.SDK_INT >= 23
-//                &&
-//                ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA)
-//                        != PackageManager.PERMISSION_GRANTED) {
-//            Toast.makeText(activity, "Have no camera permission", Toast.LENGTH_SHORT)
-//                    .show();
-//            return;
-//
-//        }
         RxPermissions.getInstance(activity)
                 .request(Manifest.permission.CAMERA)
                 .subscribe(new Action1<Boolean>() {

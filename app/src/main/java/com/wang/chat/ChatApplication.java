@@ -2,6 +2,7 @@ package com.wang.chat;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.support.multidex.MultiDex;
 
 import com.wang.chat.data.ProfileManager;

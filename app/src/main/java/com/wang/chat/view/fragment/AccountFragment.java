@@ -36,6 +36,12 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        presenter.start();
+    }
+
+    @Override
     public int getViewLayout() {
         return R.layout.fragment_account;
     }
@@ -71,11 +77,6 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
             }
         });
 
-    }
-
-    @Override
-    public void initData() {
-        presenter.loadProfile();
     }
 
     @Override

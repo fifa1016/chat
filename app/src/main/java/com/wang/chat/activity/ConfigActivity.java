@@ -1,10 +1,9 @@
 package com.wang.chat.activity;
 
-import android.app.Fragment;
 
 /**
  * A screen set user's login id & icon
- * <p>
+ * <p/>
  */
 public class ConfigActivity extends BaseActivity {
     static final String TAG = "ConfigActivity";
@@ -13,6 +12,7 @@ public class ConfigActivity extends BaseActivity {
     public void init() {
         display.showAccount();
     }
+
 
 
 }

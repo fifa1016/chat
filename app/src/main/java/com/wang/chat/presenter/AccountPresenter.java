@@ -39,6 +39,6 @@ public class AccountPresenter implements AccountContract.Presenter {
 
     @Override
     public void start() {
-
+        loadProfile();
     }
 }
