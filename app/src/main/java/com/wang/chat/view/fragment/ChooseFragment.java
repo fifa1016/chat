@@ -42,10 +42,6 @@ public class ChooseFragment extends BaseFragment implements ChooseContract.View 
 
     }
 
-    @Override
-    public void initData() {
-
-    }
 
     @Override
     public void setPresenter(ChooseContract.Presenter presenter) {

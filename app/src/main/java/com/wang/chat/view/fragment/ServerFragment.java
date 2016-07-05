@@ -44,11 +44,6 @@ public class ServerFragment extends BaseFragment implements ServerContract.View{
     }
 
     @Override
-    public void initData() {
-
-    }
-
-    @Override
     public void setPresenter(ServerContract.Presenter presenter) {
 
     }

@@ -50,11 +50,6 @@ public class ScanFragment extends BaseFragment implements ScanContract.View, Res
 
     }
 
-    @Override
-    public void initData() {
-
-    }
-
 
     @Override
     public void onPause() {
