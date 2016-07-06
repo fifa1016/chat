@@ -33,6 +33,7 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
 
     public AccountFragment() {
         // Required empty public constructor
+        Log.d(TAG, "AccountFragment: constructor");
     }
 
     @Override

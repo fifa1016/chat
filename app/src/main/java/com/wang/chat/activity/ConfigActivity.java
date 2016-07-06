@@ -1,6 +1,8 @@
 package com.wang.chat.activity;
 
 
+import android.util.Log;
+
 import com.wang.chat.data.network.test.TestRetrofit;
 
 /**
@@ -12,6 +14,7 @@ public class ConfigActivity extends BaseActivity {
 
     @Override
     public void init() {
+        Log.d(TAG, "init: ");
         display.showAccount();
         TestRetrofit.asyncTest();
 //        TestRetrofit.syncTest();

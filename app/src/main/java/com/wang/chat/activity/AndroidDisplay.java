@@ -32,6 +32,7 @@ public class AndroidDisplay implements Display {
 
     @Override
     public void showAccount() {
+        Log.d(TAG, "showAccount: ");
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
 
         AccountFragment frag = new AccountFragment();
