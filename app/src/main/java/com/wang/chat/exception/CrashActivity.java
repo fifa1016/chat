@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.widget.TextView;
 
 import com.wang.chat.R;
 import com.wang.chatlib.util.DateUtil;
@@ -16,6 +18,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by wang on 16-7-1.
  */
@@ -24,13 +29,26 @@ public class CrashActivity extends AppCompatActivity {
 
     private String logFileFullName = null;
 
+    @BindView(R.id.txt_log_info)
+    TextView txtInfo;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crash);
+        ButterKnife.bind(this);
+
+        if( txtInfo == null ){
+            Log.e(TAG, "onCreate: txtInfo null!!" );
+        }
 
         logFileFullName = saveLogToFile();
-        sendLogFile(logFileFullName);
+        if (logFileFullName != null) {
+            txtInfo.setText("Log saved to :" + logFileFullName);
+            sendLogFile(logFileFullName);
+        } else {
+            txtInfo.setText("Log save failed");
+        }
     }
 
     private void sendLogFile(String fullName) {
@@ -54,8 +72,13 @@ public class CrashActivity extends AppCompatActivity {
             model = Build.MANUFACTURER + " " + model;
         }
 
-        String path = Environment.getExternalStorageDirectory() + "/com.wang.chat/";
-        String fullName = path + "log_" + DateUtil.getSimpleTimeString() + ".txt";
+        String dirPath = Environment.getExternalStorageDirectory() + "/com.wang.chat/";
+        File dir = new File(dirPath);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+
+        String fullName = dirPath + "log_" + DateUtil.getSimpleTimeString() + ".txt";
         File file = new File(fullName);
         InputStreamReader reader = null;
         FileWriter writer = null;
