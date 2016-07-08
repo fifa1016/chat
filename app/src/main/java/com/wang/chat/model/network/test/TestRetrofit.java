@@ -1,8 +1,8 @@
-package com.wang.chat.data.network.test;
+package com.wang.chat.model.network.test;
 
 import android.util.Log;
 
-import com.wang.chat.data.RetrofitGenerator;
+import com.wang.chat.model.RetrofitGenerator;
 
 import java.util.List;
 

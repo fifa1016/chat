@@ -1,4 +1,4 @@
-package com.wang.chat.data.bean;
+package com.wang.chat.model.bean;
 
 /**
  * Created by wang on 16-6-28.

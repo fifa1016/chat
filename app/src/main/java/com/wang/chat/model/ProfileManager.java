@@ -1,4 +1,4 @@
-package com.wang.chat.data;
+package com.wang.chat.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;

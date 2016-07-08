@@ -115,3 +115,13 @@
 -keep class android.support.design.** { *; }
 -keep interface android.support.design.** { *; }
 -keep public class android.support.design.R$* { *; }
+
+### GSON 2.2.4 specific rules ##
+##-keepattributes EnclosingMethod
+## Gson specific classes
+##-keep class sun.misc.Unsafe { *; }
+#-keep class com.google.gson.stream.** { *;}
+
+
+-keep class com.wang.chat.data.network.test.Contributor { *; }
+-keep class com.wang.chat.data.bean.** { *; }

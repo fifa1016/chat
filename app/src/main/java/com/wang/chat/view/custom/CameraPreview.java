@@ -44,7 +44,7 @@ public class CameraPreview extends SurfaceView
     public void init() {
         Log.d(TAG, "init()");
         if (mCamera == null) {
-            Log.d(TAG, "init: ", new Throwable());
+//            Log.d(TAG, "init: ", new Throwable());
             mCamera = Camera.open();
 
             mSurfaceHolder = getHolder();
@@ -226,8 +226,20 @@ public class CameraPreview extends SurfaceView
     }
 
     private void autoFocus() {
-        mCamera.autoFocus(this);
+        try {
+            mCamera.autoFocus(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    autoFocus();
+                }
+            }, 500);
+        }
     }
+
+    private Handler handler = new Handler();
 
     @Override
     public void onPreviewFrame(byte[] data, Camera camera) {

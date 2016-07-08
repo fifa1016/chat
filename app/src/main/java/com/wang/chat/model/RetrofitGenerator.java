@@ -1,4 +1,4 @@
-package com.wang.chat.data;
+package com.wang.chat.model;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;

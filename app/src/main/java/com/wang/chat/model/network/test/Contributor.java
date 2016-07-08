@@ -1,4 +1,4 @@
-package com.wang.chat.data.network.test;
+package com.wang.chat.model.network.test;
 
 /**
  * Created by wang on 16-7-4.

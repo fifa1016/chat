@@ -39,6 +39,4 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public abstract void initViews(View view);
-
-
 }

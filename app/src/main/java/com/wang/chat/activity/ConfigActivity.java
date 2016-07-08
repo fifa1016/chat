@@ -3,7 +3,7 @@ package com.wang.chat.activity;
 
 import android.util.Log;
 
-import com.wang.chat.data.network.test.TestRetrofit;
+import com.wang.chat.model.network.test.TestRetrofit;
 
 /**
  * A screen set user's login id & icon
@@ -23,7 +23,7 @@ public class ConfigActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        test();
+//        test();
     }
 
     public void test(){

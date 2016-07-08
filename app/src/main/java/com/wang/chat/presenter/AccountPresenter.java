@@ -1,12 +1,9 @@
 package com.wang.chat.presenter;
 
-import android.graphics.Bitmap;
 import android.net.Uri;
 
 import com.wang.chat.contract.AccountContract;
-import com.wang.chat.data.ProfileManager;
-
-import java.io.InputStream;
+import com.wang.chat.model.ProfileManager;
 
 /**
  * Created by wang on 16-6-17.
@@ -17,7 +14,12 @@ public class AccountPresenter implements AccountContract.Presenter {
 
     //TODO add datasource
     public AccountPresenter(AccountContract.View view) {
-        this.view = view;
+        this.view=view;
+    }
+
+    @Override
+    public void start() {
+        loadProfile();
     }
 
     @Override
@@ -37,8 +39,4 @@ public class AccountPresenter implements AccountContract.Presenter {
         ProfileManager.getInstance().saveLoginId(id);
     }
 
-    @Override
-    public void start() {
-        loadProfile();
-    }
 }

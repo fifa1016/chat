@@ -1,50 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:padding="20dp"
-        >
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal"
-            >
-        <TextView android:layout_width="100dp"
-                  android:layout_height="wrap_content"
-                  android:textStyle="bold"
-                  android:text="@string/server_ip"
-                />
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:id="@+id/server_ip"
-                />
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/server_ip"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/server_ip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tool:text="192.168.0.1"
+            />
     </LinearLayout>
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal"
-            >
-        <TextView android:layout_width="100dp"
-                  android:layout_height="wrap_content"
-                  android:text="@string/server_port"
-                  android:textStyle="bold"
-                />
-        <EditText android:layout_width="120dp"
-                  android:layout_height="wrap_content"
-                  android:id="@+id/server_port"
-                  android:hint="@string/server_port_hint"
-                  android:inputType="numberSigned"
-                />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/server_port"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/server_port"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/server_port_hint"
+            android:inputType="numberSigned" />
     </LinearLayout>
-    <RelativeLayout android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-            >
-        <ImageView android:layout_width="280dp"
-                   android:layout_height="280dp"
-                   android:scaleType="fitXY"
-                   android:id="@+id/server_qrcode"
-                   android:background="@android:color/holo_green_dark"
-                />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/server_qrcode"
+            android:layout_width="280dp"
+            android:layout_height="280dp"
+            android:background="@android:color/holo_green_dark"
+            android:scaleType="fitXY" />
     </RelativeLayout>
 
 </LinearLayout>

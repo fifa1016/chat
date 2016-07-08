@@ -1,4 +1,4 @@
-package com.wang.chat.data.network.test;
+package com.wang.chat.model.network.test;
 
 import java.util.List;
 
