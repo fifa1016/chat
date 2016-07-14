@@ -54,14 +54,12 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
 
         imgAvatar = (ImageView) view.findViewById(R.id.avatar_image);
 
-        imgAvatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent pickIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                pickIntent.setType("image/*");
-                startActivityForResult(pickIntent, REQUEST_CODE_PICK);
-            }
+        imgAvatar.setOnClickListener(v -> {
+            Intent pickIntent = new Intent(Intent.ACTION_GET_CONTENT);
+            pickIntent.setType("image/*");
+            startActivityForResult(pickIntent, REQUEST_CODE_PICK);
         });
+
 
         btnNext = (Button) view.findViewById(R.id.btn_account_next);
         btnNext.setOnClickListener(new View.OnClickListener() {
