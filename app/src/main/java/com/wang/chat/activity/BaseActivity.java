@@ -1,8 +1,10 @@
 package com.wang.chat.activity;
 
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 
+import com.wang.chat.BuildConfig;
 import com.wang.chat.R;
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -14,11 +16,21 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getContentViewLayout());
 
+        if (BuildConfig.DEBUG) {
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                    .detectAll()
+                    .penaltyLog()
+                    .build());
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                    .detectAll()
+                    .penaltyLog()
+                    .build());
+        }
         display = new AndroidDisplay(this);
         init();
     }
 
-    public int getContentViewLayout(){
+    public int getContentViewLayout() {
         return R.layout.activity_base;
     }
 
@@ -27,9 +39,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if( getSupportFragmentManager().getBackStackEntryCount() > 1 ){
+        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
             getSupportFragmentManager().popBackStack();
-        }else {
+        } else {
             super.onBackPressed();
         }
     }

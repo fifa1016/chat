@@ -6,9 +6,11 @@ import com.wang.chat.model.RetrofitGenerator;
 
 import java.util.List;
 
+import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func0;
 import rx.schedulers.Schedulers;
 
 /**
@@ -85,5 +87,9 @@ public class TestRetrofit {
 //
 //            }
 //        });
+    }
+
+    public static void test(){
+        Observable.defer(() -> Observable.just("test"));
     }
 }

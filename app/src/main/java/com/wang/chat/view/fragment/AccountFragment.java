@@ -62,18 +62,14 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
 
 
         btnNext = (Button) view.findViewById(R.id.btn_account_next);
-        btnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String id = editId.getText().toString();
-                if (TextUtils.isEmpty(id)) {
-                    editId.setError(getString(R.string.id_empty_error));
-                    return;
-                }
-                presenter.saveLoginId(id);
-
-                AccountFragment.this.getDisplay().showChoose();
+        btnNext.setOnClickListener(v -> {
+            String id = editId.getText().toString();
+            if (TextUtils.isEmpty(id)) {
+                editId.setError(getString(R.string.id_empty_error));
+                return;
             }
+            presenter.saveLoginId(id);
+            AccountFragment.this.getDisplay().showChoose();
         });
 
     }
