@@ -18,7 +18,7 @@ import android.widget.Toast;
  */
 
 public class DrawerLayout extends RelativeLayout {
-    private static final String TAG = "TestLayout";
+    private static final String TAG = "test/DrawerLayout";
     ViewDragHelper viewDragHelper;
 
     public DrawerLayout(Context context) {
