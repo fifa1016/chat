@@ -8,28 +8,30 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 /**
  * Created by wang on 16-8-8.
  */
 
-public class TestLayout extends FrameLayout {
+public class DrawerLayout extends RelativeLayout {
     private static final String TAG = "TestLayout";
     ViewDragHelper viewDragHelper;
 
-    public TestLayout(Context context) {
+    public DrawerLayout(Context context) {
         super(context);
         init();
     }
 
-    public TestLayout(Context context, AttributeSet attrs) {
+    public DrawerLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public TestLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public DrawerLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -60,6 +62,19 @@ public class TestLayout extends FrameLayout {
         return true;
     }
 
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        Log.d(TAG, "onLayout: ");
+        super.onLayout(changed, l, t, r, b);
+
+        if (childDrawer != null) {
+            int width = childDrawer.getWidth();
+            halfWidth = width / 2;
+            int height = childDrawer.getHeight();
+            childDrawer.layout(-width, 0, 0, height);
+        }
+    }
+
     Toast toast = null;
 
     private void showToast(String str) {
@@ -73,32 +88,26 @@ public class TestLayout extends FrameLayout {
     class DragCallback extends ViewDragHelper.Callback {
         @Override
         public boolean tryCaptureView(View child, int pointerId) {
-            return child == childDrawer;
-        }
+            Log.d(TAG, "tryCaptureView: drawer=" + (child == childDrawer)
+                    + ", content=" + (child == childContent));
 
-        @Override
-        public void onEdgeTouched(int edgeFlags, int pointerId) {
-            Log.d(TAG, "onEdgeTouched: ");
-            super.onEdgeTouched(edgeFlags, pointerId);
+
+            if (drawerShowing) {
+
+            }
+            return child == childDrawer;
         }
 
         @Override
         public void onEdgeDragStarted(int edgeFlags, int pointerId) {
             Log.d(TAG, "onEdgeDragStarted: ");
             super.onEdgeDragStarted(edgeFlags, pointerId);
-            if (childDrawer.getVisibility() == GONE) {
-                childDrawer.setVisibility(VISIBLE);
-                int width = childDrawer.getWidth();
-                int height = childDrawer.getHeight();
-                halfWidth = width / 2;
-                childDrawer.layout(-width, 0, 0, height);
-            }
             viewDragHelper.captureChildView(childDrawer, pointerId);
         }
 
         @Override
         public int clampViewPositionHorizontal(View child, int left, int dx) {
-            Log.d(TAG, "clampViewPositionHorizontal: left=" + left + ", dx=" + dx);
+            Log.d(TAG, "clampViewPositionHorizontal: left=" + left + ", dx=" + dx + ", right=" + child.getRight());
             final int leftBound = -childDrawer.getWidth();
             final int rightBound = 0;
             final int newLeft = Math.min(Math.max(left, leftBound), rightBound);
@@ -107,53 +116,60 @@ public class TestLayout extends FrameLayout {
         }
 
         @Override
-        public int clampViewPositionVertical(View child, int top, int dy) {
-            return 0;
-        }
-
-        @Override
         public void onViewReleased(View releasedChild, float xvel, float yvel) {
 
             if (childDrawer == releasedChild) {
-                int left = childDrawer.getLeft();
 
-                // by animation
-                if (left < halfWidth) {
-                    childDrawer.animate()
-                            .x(-1.0f * childDrawer.getWidth())
-                            .start();
+                int right = childDrawer.getRight();
+
+                Log.d(TAG, "onViewReleased: right=" + right + ", halfWidth=" + halfWidth);
+
+                int newLeft;
+                if (right < halfWidth) {
+                    newLeft = -childDrawer.getWidth();
+                    drawerShowing = false;
                 } else {
-                    childDrawer.animate()
-                            .x(0)
-                            .start();
+                    newLeft = 0;
+                    drawerShowing = true;
                 }
 
-                // by viewDragHelper
-//                int newLeft;
-//                if (left < halfWidth) {
-//                    newLeft = -childDrawer.getWidth();
-//                } else {
-//                    newLeft = 0;
-//                }
-//                if (viewDragHelper.smoothSlideViewTo(childDrawer, newLeft, childDrawer.getTop())) {
-//                    Log.d(TAG, "onViewReleased: smooth success");
-//                    ViewCompat.postInvalidateOnAnimation(childDrawer);
-//                } else {
-//                    Log.d(TAG, "onViewReleased: smooth failed");
-//
-//                }
+                slideDrawer(newLeft, childDrawer.getTop());
+
             }
         }
 
     }//callback
+
+    private boolean drawerShowing = false;
+
+    private void slideDrawer(int left, int top) {
+//        viewDragHelper.settleCapturedViewAt(left, top);
+//        invalidate();
+
+        if (viewDragHelper.smoothSlideViewTo(childDrawer, left, top)) {
+            Log.d(TAG, "onViewReleased: smooth success, newLeft=" + left);
+            ViewCompat.postInvalidateOnAnimation(this);
+            postInvalidate();
+        } else {
+            Log.d(TAG, "onViewReleased: smooth failed");
+        }
+    }
 
     View childContent, childDrawer;
     int halfWidth;
 
     @Override
     protected void onFinishInflate() {
+        Log.d(TAG, "onFinishInflate: ");
         childContent = getChildAt(0);
         childDrawer = getChildAt(1);
         super.onFinishInflate();
+    }
+
+    @Override
+    public void computeScroll() {
+        if (viewDragHelper.continueSettling(true)) {
+            invalidate();
+        }
     }
 }
