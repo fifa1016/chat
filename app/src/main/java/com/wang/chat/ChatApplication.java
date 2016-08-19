@@ -10,12 +10,15 @@ import android.util.Log;
 import com.wang.chat.model.ProfileManager;
 import com.wang.chat.exception.CrashHandler;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by shawn on 8/24/15.
  */
 public class ChatApplication extends Application {
     private static final String TAG = "ChatApplication";
-    
+
     public static ChatApplication from(Context context) {
         return (ChatApplication) context.getApplicationContext();
     }
@@ -39,7 +42,7 @@ public class ChatApplication extends Application {
     /**
      * activity stack
      */
-    private void registerActivityLifeCallback(){
+    private void registerActivityLifeCallback() {
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle bundle) {
@@ -78,12 +81,34 @@ public class ChatApplication extends Application {
             }
         });
     }
-    
-    private void pushActivity(Activity activity){
+
+    private List<Activity> listActivity;
+
+    private void pushActivity(Activity activity) {
         Log.d(TAG, "pushActivity: ");
+        if (listActivity == null) {
+            listActivity = new ArrayList<>();
+        }
+        listActivity.add(activity);
     }
-    
-    private void popActivity(Activity activity){
+
+    private void popActivity(Activity activity) {
         Log.d(TAG, "popActivity: ");
+        listActivity.remove(activity);
     }
+
+    private void clearActivityFrom(String className) {
+        Log.d(TAG, "clearActivityFrom: " + className);
+        for (int i = listActivity.size() - 1; i >= 0; i--) {
+            Activity act = listActivity.get(i);
+            boolean get = act.getClass().getSimpleName().equals(className);
+            popActivity(act);
+            act.finish();
+
+            if (get) {
+                break;
+            }
+        }
+    }
+
 }

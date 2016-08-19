@@ -1,0 +1,36 @@
+TASK com.wang.chat id=9494
+  ACTIVITY com.wang.chat/.test.TestActivity b440a99 pid=14924
+    Local Activity ef2caa6 State:
+      mResumed=false mStopped=true mFinished=false
+      mChangingConfigurations=false
+      mCurrentConfig={1.0 ?mcc?mnc en_US ldltr sw411dp w411dp h659dp 560dpi nrml port finger -keyb/v/h -nav/h s.38}
+      mLoadersStarted=true
+      FragmentManager misc state:
+        mHost=android.app.Activity$HostCallbacks@9830ce7
+        mContainer=android.app.Activity$HostCallbacks@9830ce7
+        mCurState=3 mStateSaved=true mDestroyed=false
+    ViewRoot:
+      mAdded=true mRemoved=false
+      mConsumeBatchedInputScheduled=false
+      mConsumeBatchedInputImmediatelyScheduled=false
+      mPendingInputEventCount=0
+      mProcessInputEventsScheduled=false
+      mTraversalScheduled=false      mIsAmbientMode=false
+      android.view.ViewRootImpl$NativePreImeInputStage: mQueueLength=0
+      android.view.ViewRootImpl$ImeInputStage: mQueueLength=0
+      android.view.ViewRootImpl$NativePostImeInputStage: mQueueLength=0
+    Choreographer:
+      mFrameScheduled=false
+      mLastFrameTime=26027288 (931252 ms ago)
+    View Hierarchy:
+      com.android.internal.policy.PhoneWindow$DecorView{c8a37f7 I.E...... R......D 0,0-1440,2560}
+        android.widget.LinearLayout{685a0cd V.E...... .......D 0,0-1440,2392}
+          android.view.ViewStub{c651094 G.E...... ......I. 0,0-0,0 #10203b0 android:id/action_mode_bar_stub}
+          android.widget.FrameLayout{9721d82 V.E...... .......D 0,84-1440,2392 #1020002 android:id/content}
+            com.wang.chat.test.DrawerLayout{f205c93 V.E...... .......D 0,0-1440,2308}
+              android.view.View{9ae64d0 V.ED..... ......ID 0,0-1440,2308 #7f0b0058 app:id/cont}
+              android.view.View{ad87cc9 V.ED..... ......ID -700,0-0,2308 #7f0b0059 app:id/drawer}
+        android.view.View{3de77f6 V.ED..... ......ID 0,2392-1440,2560 #1020030 android:id/navigationBarBackground}
+        android.view.View{3f14664 V.ED..... ......ID 0,0-1440,84 #102002f android:id/statusBarBackground}
+    Looper (main, tid 1) {88d573d}
+      (Total messages: 0, polling=false, quitting=false)

@@ -230,12 +230,7 @@ public class CameraPreview extends SurfaceView
             mCamera.autoFocus(this);
         } catch (Exception e) {
             e.printStackTrace();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    autoFocus();
-                }
-            }, 500);
+            handler.postDelayed(() -> autoFocus(), 500);
         }
     }
 

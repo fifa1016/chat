@@ -1,4 +1,4 @@
-package com.wang.chat.view.custom;
+package com.wang.chat.test;
 
 import android.content.Context;
 import android.support.v4.view.MotionEventCompat;
