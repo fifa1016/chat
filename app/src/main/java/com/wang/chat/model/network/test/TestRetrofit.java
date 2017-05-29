@@ -90,6 +90,6 @@ public class TestRetrofit {
     }
 
     public static void test(){
-        Observable.defer(() -> Observable.just("test"));
+        //Observable.defer(() -> Observable.just("test"));
     }
 }

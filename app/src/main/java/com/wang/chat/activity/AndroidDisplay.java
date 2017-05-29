@@ -15,6 +15,8 @@ import com.wang.chat.view.fragment.ChooseFragment;
 import com.wang.chat.view.fragment.ScanFragment;
 import com.wang.chat.view.fragment.ServerFragment;
 
+import rx.functions.Action1;
+
 
 /**
  * Created by wang on 16-6-21.
@@ -67,22 +69,24 @@ public class AndroidDisplay implements Display {
     public void showScanServer() {
         RxPermissions.getInstance(activity)
                 .request(Manifest.permission.CAMERA)
-                .subscribe(granted -> {
-                    if (granted) {
-                        Log.d(TAG, "call: camera granted!");
-                        FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
-                        BaseFragment frag = new ScanFragment();
-                        frag.setDisplay(AndroidDisplay.this);
-                        transaction.replace(R.id.activity_container, frag);
-                        transaction.addToBackStack("scan");
-                        transaction.commit();
-                    } else {
-                        Log.d(TAG, "call: camera NOT granted");
-                        Toast.makeText(activity, "Have no camera permission", Toast.LENGTH_SHORT)
-                                .show();
+                .subscribe(new Action1<Boolean>() {
+                    @Override
+                    public void call(Boolean granted) {
+                        if (granted) {
+                            Log.d(TAG, "call: camera granted!");
+                            FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
+                            BaseFragment frag = new ScanFragment();
+                            frag.setDisplay(AndroidDisplay.this);
+                            transaction.replace(R.id.activity_container, frag);
+                            transaction.addToBackStack("scan");
+                            transaction.commit();
+                        } else {
+                            Log.d(TAG, "call: camera NOT granted");
+                            Toast.makeText(activity, "Have no camera permission", Toast.LENGTH_SHORT)
+                                    .show();
+                        }
                     }
-                }//Action1
-                );
+                });
 
     }
 }
