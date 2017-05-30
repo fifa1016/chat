@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        icon="@drawable/ic_network"
+        id="@+id/tab_network"
+        title="Network" />
+
+    <tab
+        barColorWhenSelected="#5d4037"
+        icon="@drawable/ic_home"
+        id="@+id/tab_home"
+        title="Home" />
+
+    <tab
+        icon="@drawable/ic_address"
+        id="@+id/tab_address"
+        title="Address" />
+
+    <tab
+        icon="@drawable/ic_me"
+        id="@+id/tab_me"
+        title="Me" />
+</tabs>

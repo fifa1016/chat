@@ -9,6 +9,11 @@
 
     <style name="AppTheme" parent="Base.AppTheme" />
 
+    <style name="AppTheme.TransNav" parent="AppTheme">
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+    <!-- ******************* -->
+
     <style name="Toolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="ChatText" parent="android:TextAppearance.Holo.Widget.TextView">
@@ -22,5 +27,9 @@
     <style name="ChatButton" parent="android:TextAppearance.Holo.Widget.Button">
         <item name="android:textSize">18sp</item>
     </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>
